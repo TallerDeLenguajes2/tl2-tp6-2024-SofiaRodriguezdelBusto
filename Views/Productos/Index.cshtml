@@ -1,0 +1,43 @@
+@model List<Producto>
+@* <a asp-controller= "Productos" asp-action="GetProductos">Productos</a>
+
+<form asp-controller = "Productos" asp-action="CrearProducto" method="post">
+    <p>Dar de alta producto</p>
+    <input type = "text" name="Descripcion" />
+    <input type="number" name="Precio"/>
+    <input type="submit" value="Dar de alta" class="btn btn-default" />
+</form> *@
+
+
+<h2>Lista de Productos</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Descripción</th>
+            <th>Precio</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var producto in Model)
+        {
+            <tr>
+                <td>@producto.IdProducto</td>
+                <td>@producto.Descripcion</td>
+                <td>@producto.Precio.ToString("C")</td>
+                <td>
+                    <a asp-controller="Productos" asp-action="Detalles" asp-route-id="@producto.IdProducto" class="btn btn-info">Detalles</a>
+                    <a asp-controller="Productos" asp-action="ModificarProducto" asp-route-id="@producto.IdProducto" class="btn btn-warning">Editar</a>
+                    <a asp-controller="Productos" asp-action="EliminarProductoPorId" asp-route-id="@producto.IdProducto" class="btn btn-danger">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+
