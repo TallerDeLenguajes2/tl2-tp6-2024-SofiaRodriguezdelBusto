@@ -3,22 +3,29 @@ using Microsoft.AspNetCore.Mvc;
 namespace MiWebApi.Controllers;
 
 
-public class ProductosController : Controller
+public class PresupuestosController : Controller
 {
 
-    private readonly ILogger<ProductosController> _logger;
+    private readonly ILogger<PresupuestosController> _logger;
 
-    private ProductosRepository repoProductos;
+    private PresupuestosRepository repoPresupuestos;
 
-    public ProductosController(ILogger<ProductosController> logger)
+    public PresupuestosController(ILogger<PresupuestosController> logger)
     {
         _logger = logger;
-        repoProductos = new ProductosRepository();
+        repoPresupuestos = new PresupuestosRepository();
     }
 
     public IActionResult Index()
     {
-        return View(repoProductos.ObtenerProductos());
+        return View(repoPresupuestos.ObtenerPresupuestos());
+    }
+
+    [HttpGet]
+
+    public IActionResult ObtenerDetallesDelPresupuesto(int id)
+    {
+        
     }
 
     [HttpGet]
@@ -30,7 +37,7 @@ public class ProductosController : Controller
     [HttpPost]
     public IActionResult CrearProducto(Producto producto)
     {
-        repoProductos.CrearProducto(producto);
+        repoPresupuestos.CrearProducto(producto);
         return RedirectToAction ("Index");
 
     }
@@ -38,14 +45,14 @@ public class ProductosController : Controller
     [HttpGet]
     public IActionResult ModificarProducto(int id)
     {
-        var producto  = repoProductos.ObtenerProductoPorId(id);
+        var producto  = repoPresupuestos.ObtenerProductoPorId(id);
         return View(producto);
     }
 
     [HttpPost]
     public IActionResult ModificarProducto(Producto producto)
     {
-        repoProductos.ModificarProducto(producto);
+        repoPresupuestos.ModificarProducto(producto);
         return RedirectToAction ("Index"); 
 
     }
@@ -53,7 +60,7 @@ public class ProductosController : Controller
     [HttpGet]
     public IActionResult EliminarProductoPorId(int id)
     {
-        repoProductos.EliminarProductoPorId(id);
+        repoPresupuestos.EliminarProductoPorId(id);
         return RedirectToAction ("Index"); 
     }
 

@@ -106,7 +106,7 @@ class ProductosRepository
         string connectionString = @"Data Source = db/Tienda.db;Cache=Shared";
 
         string query = @"DELETE FROM Productos WHERE idProducto = @Id;";
-        string query2 = @"DELETE FROM PresupuestosDetalle WHERE idProducto = @Id;";
+        string query2 = @"DELETE FROM PresupuestosDetalle WHERE idProducto = @id;";
 
         using (SqliteConnection connection = new SqliteConnection(connectionString))
         {
@@ -114,7 +114,7 @@ class ProductosRepository
             SqliteCommand command = new SqliteCommand(query,connection);
             SqliteCommand command2 = new SqliteCommand(query2,connection);
             command.Parameters.AddWithValue("@Id", id);
-            command2.Parameters.AddWithValue("@Id", id);
+            command2.Parameters.AddWithValue("@id", id);
             command2.ExecuteNonQuery();
             command.ExecuteNonQuery();
             connection.Close();            
