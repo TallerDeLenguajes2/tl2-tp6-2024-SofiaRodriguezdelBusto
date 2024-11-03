@@ -2,6 +2,10 @@
 
 <h2>Presupuestos</h2>
 
+<div class="text-center">
+    <a asp-controller="Presupuestos" asp-action="AltaPresupuesto" class="btn btn-success mb-2">Alta presupuesto</a>
+</div>
+
 <table class="table table-bordered">
     <thead>
         <tr>
@@ -17,15 +21,15 @@
                 <td>@presupuesto.NombreDestinatario</td>
                 <td>@presupuesto.FechaCreacion.ToShortDateString()</td>
                 <td>
-                    <a asp-controller="Presupuestos" asp-action="ObtenerDetallesDelPresupuesto" asp-route-id="@presupuesto.IdPresupuesto" class="btn btn-info">Detalles</a>
+                    <a asp-controller="Presupuestos" asp-action="AgregarProductoAPresupuesto" asp-route-id="@presupuesto.IdPresupuesto" class="btn btn-success">Agregar Producto</a>
+                    <a asp-controller="Presupuestos" asp-action="EliminarProductoAPresupuesto" asp-route-id="@presupuesto.IdPresupuesto" class="btn btn-danger">Eliminar Producto</a>
+                    <a asp-controller="Presupuestos" asp-action="DetallesDelPresupuesto" asp-route-id="@presupuesto.IdPresupuesto" class="btn btn-info">Detalles</a>
                     <a asp-controller="Presupuestos" asp-action="ModificarPresupuesto" asp-route-id="@presupuesto.IdPresupuesto" class="btn btn-warning">Editar</a>
-                    <a asp-controller="Presupuestos" asp-action="EliminarPresupuestoPorId" asp-route-id="@presupuesto.IdPresupuesto" class="btn btn-danger">Eliminar</a>
+                    <a asp-controller="Presupuestos" asp-action="EliminarPresupuesto" asp-route-id="@presupuesto.IdPresupuesto" class="btn btn-danger">Eliminar</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
 
-<div class="text-center">
-    <a asp-controller="Productos" asp-action="AltaProducto" class="btn btn-success">Alta producto</a>
-</div>
+

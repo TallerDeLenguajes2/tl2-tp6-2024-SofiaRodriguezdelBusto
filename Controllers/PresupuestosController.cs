@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace MiWebApi.Controllers;
 
@@ -23,45 +24,98 @@ public class PresupuestosController : Controller
 
     [HttpGet]
 
-    public IActionResult ObtenerDetallesDelPresupuesto(int id)
+    public IActionResult DetallesDelPresupuesto(int id)
     {
-        
+        return View(repoPresupuestos.ObtenerPresupuestoPorId(id));
     }
 
     [HttpGet]
-    public IActionResult AltaProducto()
+    public IActionResult AltaPresupuesto()
     {
         return View();
     }
 
+    
     [HttpPost]
-    public IActionResult CrearProducto(Producto producto)
+    public IActionResult CrearPresupuesto(Presupuesto presupuesto)
     {
-        repoPresupuestos.CrearProducto(producto);
+        repoPresupuestos.CrearPresupuesto(presupuesto);
         return RedirectToAction ("Index");
 
     }
 
     [HttpGet]
-    public IActionResult ModificarProducto(int id)
+
+    public IActionResult AgregarProductoAPresupuesto(int id)
     {
-        var producto  = repoPresupuestos.ObtenerProductoPorId(id);
+        ProductosRepository repoProductos = new ProductosRepository();
+        List<Producto> productos = repoProductos.ObtenerProductos();
+        ViewData["Productos"] = productos.Select(p => new SelectListItem
+        {
+            Value = p.IdProducto.ToString(), 
+            Text = p.Descripcion 
+        }).ToList();
+
+        return View(id);
+    }
+
+    [HttpPost]
+
+    public IActionResult AgregarProductoEnPresupuesto(int idPresupuesto, int idProducto, int cantidad)
+    {
+        repoPresupuestos.AgregarProducto(idPresupuesto, idProducto, cantidad);
+        return RedirectToAction ("Index");
+    }
+    
+    [HttpGet]
+
+    public IActionResult EliminarProductoAPresupuesto(int id)
+    {
+        Presupuesto presupuesto = repoPresupuestos.ObtenerPresupuestoPorId(id);
+        ViewData["Productos"] = presupuesto.Detalle.Select(p => new SelectListItem
+        {
+            Value = p.Producto.IdProducto.ToString(), 
+            Text = p.Producto.Descripcion 
+        }).ToList();
+
+        return View(id);
+    }
+
+    [HttpPost]
+
+    public IActionResult EliminarProductoEnPresupuesto(int idPresupuesto, int idProducto)
+    {
+        repoPresupuestos.EliminarProducto(idPresupuesto, idProducto);
+        return RedirectToAction ("Index");
+    }
+
+    [HttpGet]
+    public IActionResult ModificarPresupuesto(int id)
+    {
+        var producto  = repoPresupuestos.ObtenerPresupuestoPorId(id);
         return View(producto);
     }
 
     [HttpPost]
-    public IActionResult ModificarProducto(Producto producto)
+    public IActionResult ModificarPresupuesto(Presupuesto presupuesto)
     {
-        repoPresupuestos.ModificarProducto(producto);
+        repoPresupuestos.ModificarPresupuesto(presupuesto);
         return RedirectToAction ("Index"); 
 
+    }
+    
+
+    [HttpGet]
+
+    public IActionResult EliminarPresupuesto(int id)
+    {
+        return View(repoPresupuestos.ObtenerPresupuestoPorId(id));
     }
 
     [HttpGet]
-    public IActionResult EliminarProductoPorId(int id)
+    public IActionResult EliminarPresupuestoPorId(int id)
     {
-        repoPresupuestos.EliminarProductoPorId(id);
+        repoPresupuestos.EliminarPresupuestoPorId(id);
         return RedirectToAction ("Index"); 
     }
-
 }

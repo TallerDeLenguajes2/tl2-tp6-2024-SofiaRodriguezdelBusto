@@ -1,0 +1,24 @@
+@model int
+
+<form asp-controller="Presupuestos" asp-action="AgregarProductoEnPresupuesto" method="post" class="container mt-4">
+
+    <input type="hidden" name="idPresupuesto" value="@Model" />
+    
+    <div class="mb-3">
+        <label for="idProducto" class="form-label">Producto</label>
+        <select name="idProducto" class="form-control" required>
+            <option value="">Seleccione un producto</option>
+            @foreach (var producto in (IEnumerable<SelectListItem>)ViewData["Productos"])
+            {
+                <option value="@producto.Value">@producto.Text</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="cantidad" class="form-label">Cantidad</label>
+        <input name="cantidad" class="form-control" type="number" required min="1" />
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-2">Agregar Producto</button>
+</form>

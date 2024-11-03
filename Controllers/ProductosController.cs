@@ -51,6 +51,12 @@ public class ProductosController : Controller
     }
 
     [HttpGet]
+    public IActionResult EliminarProducto(int id)
+    {
+        return View(repoProductos.ObtenerProductoPorId(id));
+    }
+
+    [HttpGet]
     public IActionResult EliminarProductoPorId(int id)
     {
         repoProductos.EliminarProductoPorId(id);

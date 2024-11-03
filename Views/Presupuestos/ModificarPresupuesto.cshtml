@@ -1,0 +1,26 @@
+@model Presupuesto
+
+
+<h2>Editar Presupuesto</h2>
+
+<form asp-controller="Presupuestos" asp-action="ModificarPresupuesto" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="NombreDestinatario" class="control-label">Nombre Destinatario</label>
+        <input asp-for="NombreDestinatario" class="form-control" value="@Model.NombreDestinatario"/>
+        <span asp-validation-for="NombreDestinatario" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="FechaCreacion" class="control-label"Fecha de Creacion></label>
+        <input asp-for="FechaCreacion" class="form-control" value=@Model.FechaCreacion/>
+        <span asp-validation-for="FechaCreacion" class="text-danger"></span>
+    </div>
+
+    <input type="hidden" asp-for="IdPresupuesto" />
+
+    <div class="form-group">
+        <input type="submit" value="Guardar" class="btn btn-primary" />
+    </div>
+</form>

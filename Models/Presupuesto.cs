@@ -14,22 +14,20 @@ public class Presupuesto
     public DateTime FechaCreacion { get => fechaCreacion; set => fechaCreacion = value; }
     public List<PresupuestoDetalle> Detalle { get => detalle; set => detalle = value; }
 
-    public Presupuesto(int idPresupuesto, string nombreDestinatario, DateTime fecha)
-    {
-        this.idPresupuesto = idPresupuesto;
-        this.nombreDestinatario = nombreDestinatario;
-        FechaCreacion = fecha;
-        detalle = new List<PresupuestoDetalle>();
-    }
 
     [JsonConstructor]
 
-    public Presupuesto(int idPresupuesto, string nombreDestinatario, DateTime fechaCreacion, List<PresupuestoDetalle> detalle)
+    public Presupuesto()
+    {
+        
+    }
+    public Presupuesto(int idPresupuesto, string nombreDestinatario, DateTime fechaCreacion)
     {
         IdPresupuesto = idPresupuesto;
         NombreDestinatario = nombreDestinatario;
         FechaCreacion = fechaCreacion;
-        Detalle = detalle;
+        detalle = new List<PresupuestoDetalle>();
+
     }
 
     public double MontoPresupuesto()
