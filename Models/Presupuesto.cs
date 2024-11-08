@@ -3,17 +3,17 @@ using System.Text.Json.Serialization;
 public class Presupuesto
 {
     int idPresupuesto;
-    
-    Cliente cliente;
+    string nombreDestinatario;
 
     DateTime fechaCreacion;
     List<PresupuestoDetalle> detalle;
 
 
     public int IdPresupuesto { get => idPresupuesto; set => idPresupuesto = value; }
-    public Cliente Cliente { get => cliente; set => cliente = value; }
+    public string NombreDestinatario { get => nombreDestinatario; set => nombreDestinatario = value; }
     public DateTime FechaCreacion { get => fechaCreacion; set => fechaCreacion = value; }
     public List<PresupuestoDetalle> Detalle { get => detalle; set => detalle = value; }
+
 
     [JsonConstructor]
 
@@ -21,10 +21,10 @@ public class Presupuesto
     {
         
     }
-    public Presupuesto(int idPresupuesto, Cliente cliente,  DateTime fechaCreacion)
+    public Presupuesto(int idPresupuesto, string nombreDestinatario, DateTime fechaCreacion)
     {
         IdPresupuesto = idPresupuesto;
-        Cliente = cliente;
+        NombreDestinatario = nombreDestinatario;
         FechaCreacion = fechaCreacion;
         detalle = new List<PresupuestoDetalle>();
 
