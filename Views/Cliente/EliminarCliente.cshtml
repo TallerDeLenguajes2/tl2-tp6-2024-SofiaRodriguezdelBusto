@@ -1,0 +1,15 @@
+@model Cliente
+
+<div class="container mt-4">
+    <div class="mb-4">
+        <h2>Cliente</h2>
+        <p><strong>Nombre del Cliente:</strong> @Model.Nombre</p>
+        <p><strong>Email:</strong> @Model.Email</p>
+        <p><strong>Telefono:</strong> @Model.Telefono</p>
+    </div>
+    <p class="text-center">¿Desea eliminar este Cliente?</p>
+    <div class="text-center">
+        <a asp-controller="Clientes" asp-action="EliminarClientePorId" asp-route-id="@Model.ClienteId" class="btn btn-success">Eliminar</a>
+        <a asp-controller="Clientes" asp-action="Index" class="btn btn-danger">Cancelar</a>
+    </div>
+</div>
