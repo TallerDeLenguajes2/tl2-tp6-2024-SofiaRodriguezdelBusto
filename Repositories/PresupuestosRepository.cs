@@ -8,14 +8,13 @@ class PresupuestosRepository
 
         string connectionString = @"Data Source = db/Tienda.db;Cache=Shared";
 
-        string query = @"INSERT INTO Presupuestos (NombreDestinatario, FechaCreacion) 
-        VALUES (@destinatario, @fecha)";
+        string query = @"INSERT INTO Presupuestos (FechaCreacion, IdCliente) 
+        VALUES (@fecha, @idCliente)";
 
         using (SqliteConnection connection = new SqliteConnection(connectionString))
         {
             connection.Open();
             SqliteCommand command = new SqliteCommand(query,connection);
-            command.Parameters.AddWithValue("@destinatario", presupuesto.NombreDestinatario);
             command.Parameters.AddWithValue("@fecha", presupuesto.FechaCreacion);
             command.ExecuteNonQuery();
             connection.Close();            

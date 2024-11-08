@@ -15,7 +15,7 @@
         {
             <tr>
                 <td>@producto.Descripcion</td>
-                <td>@producto.Precio.ToString("C")</td>
+                <td>$ @producto.Precio</td>
                 <td>
                     <a asp-controller="Productos" asp-action="ModificarProducto" asp-route-id="@producto.IdProducto" class="btn btn-warning">Editar</a>
                     <a asp-controller="Productos" asp-action="EliminarProducto" asp-route-id="@producto.IdProducto" class="btn btn-danger">Eliminar</a>
