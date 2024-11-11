@@ -1,4 +1,5 @@
 
+using System.Threading.Channels;
 using Microsoft.Data.Sqlite;
 
 public class ClientesRepository
@@ -11,9 +12,9 @@ public class ClientesRepository
     }
 
 
-    public void CrearCliente(Cliente cliente)
+    public void CrearCliente(ClienteViewModel cliente)
     {
-        string query = @"INSERT INTO Cliente (Nombre, Email, Telefono) VALUES (@nombre, @email, @telefono)";
+        string query = @"INSERT INTO Cliente (Nombre, Email, Telefono) VALUES (@nombre, @email, @telefono);";
 
         using (SqliteConnection connection = new SqliteConnection(connectionString))
         {
@@ -31,7 +32,7 @@ public class ClientesRepository
     {
         List<Cliente> clientes = new List<Cliente>();
 
-        string query = @"SELECT * FROM Cliente";
+        string query = "SELECT * FROM Cliente";
 
         using (SqliteConnection connection = new SqliteConnection(connectionString))
         {
@@ -40,15 +41,19 @@ public class ClientesRepository
 
             using (SqliteDataReader reader = command.ExecuteReader())
             {
-                while (reader.Read())
+                if (reader.HasRows)
                 {
-                    Cliente nuevoCliente = new Cliente();
-                    nuevoCliente.ClienteId = Convert.ToInt32(reader["idCliente"]);
-                    nuevoCliente.Nombre = reader["Nombre"].ToString();
-                    nuevoCliente.Email = reader["Email"].ToString();
-                    nuevoCliente.Telefono = reader["Telefono"].ToString();
-                    clientes.Add(nuevoCliente);
+                    while (reader.Read())
+                    {
+                        Cliente nuevoCliente = new Cliente();
+                        nuevoCliente.ClienteId = Convert.ToInt32(reader["ClienteId"]);
+                        nuevoCliente.Nombre = reader["Nombre"].ToString();
+                        nuevoCliente.Email = reader["Email"].ToString();
+                        nuevoCliente.Telefono = reader["Telefono"].ToString();
+                        clientes.Add(nuevoCliente);
+                    }
                 }
+
             }
             connection.Close();
         }
@@ -57,7 +62,7 @@ public class ClientesRepository
 
     public void ModificarCliente(Cliente cliente)
     {
-        string query = @"UPDATE Cliente SET Nombre = @nombre, Email = @email, Telefono = @telefono WHERE idCliente = @Id";
+        string query = @"UPDATE Cliente SET Nombre = @nombre, Email = @email, Telefono = @telefono WHERE ClienteId = @Id;";
 
         using (SqliteConnection connection = new SqliteConnection(connectionString))
         {
@@ -77,7 +82,7 @@ public class ClientesRepository
     {
         Cliente cliente = null; //Uso el null para devolver en caso de no encontrar nada
 
-        string query = @"SELECT * FROM Cliente WHERE idCliente = @id ";
+        string query = @"SELECT * FROM Cliente WHERE ClienteId = @id;";
 
         using (SqliteConnection connection = new SqliteConnection(connectionString))
         {
@@ -89,7 +94,7 @@ public class ClientesRepository
                 if (reader.Read())
                 {
                     cliente = new Cliente();
-                    cliente.ClienteId = Convert.ToInt32(reader["idCliente"]);
+                    cliente.ClienteId = Convert.ToInt32(reader["ClienteId"]);
                     cliente.Nombre = reader["Nombre"].ToString();
                     cliente.Email = reader["Email"].ToString();
                     cliente.Telefono = reader["Telefono"].ToString();
@@ -102,7 +107,7 @@ public class ClientesRepository
 
     public void EliminarCliente(int id)
     {
-        string query = @"DELETE FROM Cliente WHERE idCliente = @Id;";
+        string query = @"DELETE FROM Cliente WHERE ClienteId = @Id;";
 
         using (SqliteConnection connection = new SqliteConnection(connectionString))
         {
@@ -113,5 +118,4 @@ public class ClientesRepository
             connection.Close();
         }
     }
-}
 }

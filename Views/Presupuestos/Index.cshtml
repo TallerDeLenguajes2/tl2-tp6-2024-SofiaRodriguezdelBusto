@@ -18,7 +18,7 @@
         @foreach (var presupuesto in Model)
         {
             <tr>
-                <td>@presupuesto.NombreDestinatario</td>
+                <td>@presupuesto.Cliente.Nombre</td>
                 <td>@presupuesto.FechaCreacion.ToShortDateString()</td>
                 <td>
                     <a asp-controller="Presupuestos" asp-action="AgregarProductoAPresupuesto" asp-route-id="@presupuesto.IdPresupuesto" class="btn btn-success">Agregar Producto</a>

@@ -28,8 +28,9 @@ public class ProductosController : Controller
     }
 
     [HttpPost]
-    public IActionResult CrearProducto(Producto producto)
+    public IActionResult CrearProducto(ProductoViewModel producto)
     {
+        if(!ModelState.IsValid) return RedirectToAction ("Index");
         repoProductos.CrearProducto(producto);
         return RedirectToAction ("Index");
 

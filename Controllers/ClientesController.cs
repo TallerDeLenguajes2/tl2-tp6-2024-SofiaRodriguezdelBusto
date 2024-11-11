@@ -29,8 +29,9 @@ public class ClientesController : Controller
     }
 
     [HttpPost]
-    public IActionResult CrearCliente(Cliente cliente)
+    public IActionResult CrearCliente(ClienteViewModel cliente)
     {
+        if(!ModelState.IsValid) return RedirectToAction ("Index");
         repoClientes.CrearCliente(cliente);
         return RedirectToAction ("Index");
 

@@ -3,7 +3,7 @@
 <div class="container mt-4">
     <div class="mb-4">
         <h2>Presupuesto</h2>
-        <p><strong>Nombre del Destinatario:</strong> @Model.NombreDestinatario</p>
+        <p><strong>Cliente:</strong> @Model.Cliente.Nombre</p>
         <p><strong>Fecha de Creación:</strong> @Model.FechaCreacion.ToString("dd/MM/yyyy")</p>
     </div>
     @if (Model.Detalle != null && Model.Detalle.Any())

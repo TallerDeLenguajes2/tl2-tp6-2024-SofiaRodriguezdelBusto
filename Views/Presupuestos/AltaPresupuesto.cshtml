@@ -1,18 +1,21 @@
-@model Presupuesto
+@model AltaPresupuestoViewModel
 
 <form asp-asp-controller="Presupuestos" asp-action="CrearPresupuesto" method="post" class="container mt-4">
     <div class="mb-3">
-        <label asp-for="IdPresupuesto" class="form-label" hidden>ID Presupuesto</label>
-        <input asp-for="IdPresupuesto" type="number" class="form-control" value = 1 hidden/>
+        <label for="IdCliente" class="form-label">Cliente</label>
+        <select name="IdCliente" class="form-control" required>
+            <option value="">Seleccione un cliente</option>
+            @foreach (var cliente in (IEnumerable<SelectListItem>)ViewData["Clientes"])
+            {
+                <option value="@cliente.Value">@cliente.Text</option>
+            }
+        </select>
+        <span asp-validation-for="IdCliente" class="text-danger"></span>
     </div>
-    <div class="mb-3">
-        <label asp-for="NombreDestinatario" class="form-label">Nombre del Destinatario</label>
-        <input asp-for="NombreDestinatario" type="text" class="form-control" />
-    </div>
-    
     <div class="mb-3">
         <label asp-for="FechaCreacion" class="form-label">Fecha de Creación</label>
-        <input asp-for="FechaCreacion" type="date" class="form-control" />
+        <input asp-for="FechaCreacion" type="date" class="form-control" required/>
+        <span asp-validation-for="FechaCreacion" class="text-danger"></span>
     </div>
     <button type="submit" class="btn btn-primary">Guardar Presupuesto</button>
     <a asp-action="Index" class="btn btn-secondary">Cancelar</a>

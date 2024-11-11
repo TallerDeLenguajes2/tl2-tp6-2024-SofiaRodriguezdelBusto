@@ -32,14 +32,24 @@ public class PresupuestosController : Controller
     [HttpGet]
     public IActionResult AltaPresupuesto()
     {
+        ClientesRepository repoClientes = new ClientesRepository();
+        List<Cliente> Clientes = repoClientes.ObtenerClientes();
+        ViewData["Clientes"] =  Clientes.Select(c=> new SelectListItem
+        {
+            Value = c.ClienteId.ToString(), 
+            Text = c.Nombre
+        }).ToList();
+
         return View();
     }
 
     
     [HttpPost]
-    public IActionResult CrearPresupuesto(Presupuesto presupuesto)
+    public IActionResult CrearPresupuesto(AltaPresupuestoViewModel presupuesto)
     {
-        repoPresupuestos.CrearPresupuesto(presupuesto);
+
+       if(!ModelState.IsValid) return RedirectToAction ("Index");
+       repoPresupuestos.CrearPresupuesto(presupuesto);
         return RedirectToAction ("Index");
 
     }
@@ -92,8 +102,15 @@ public class PresupuestosController : Controller
     [HttpGet]
     public IActionResult ModificarPresupuesto(int id)
     {
-        var producto  = repoPresupuestos.ObtenerPresupuestoPorId(id);
-        return View(producto);
+        ClientesRepository repoClientes = new ClientesRepository();
+        List<Cliente> Clientes = repoClientes.ObtenerClientes();
+        ViewData["Clientes"] =  Clientes.Select(c=> new SelectListItem
+        {
+            Value = c.ClienteId.ToString(), 
+            Text = c.Nombre
+        }).ToList();
+        var presupuesto  = repoPresupuestos.ObtenerPresupuestoPorId(id);
+        return View(presupuesto);
     }
 
     [HttpPost]
