@@ -41,7 +41,8 @@ public class ClientesController : Controller
     public IActionResult ModificarCliente(int id)
     {
         var Cliente  = repoClientes.ObtenerCliente(id);
-        return View(Cliente);
+        var clienteVM = new ModificarClienteViewModel(Cliente);
+        return View(clienteVM);
     }
 
     [HttpPost]

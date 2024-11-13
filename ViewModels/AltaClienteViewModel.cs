@@ -8,7 +8,7 @@ public class AltaClienteViewModel
 
     string telefono;
 
-    public ClienteViewModel()
+    public AltaClienteViewModel()
     {
     }
     [Required(ErrorMessage = "El nombre es obligatorio.")]

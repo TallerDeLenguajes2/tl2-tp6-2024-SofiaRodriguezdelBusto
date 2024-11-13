@@ -65,15 +65,16 @@ public class PresupuestosController : Controller
             Value = p.IdProducto.ToString(), 
             Text = p.Descripcion 
         }).ToList();
-
-        return View(id);
+        var model = new AgregarProductoAPresuViewModel();
+        model.IdPresupuesto = id;
+        return View(model);
     }
 
     [HttpPost]
 
-    public IActionResult AgregarProductoEnPresupuesto(int idPresupuesto, int idProducto, int cantidad)
+    public IActionResult AgregarProductoEnPresupuesto(AgregarProductoAPresuViewModel infoProducto)
     {
-        repoPresupuestos.AgregarProducto(idPresupuesto, idProducto, cantidad);
+        repoPresupuestos.AgregarProducto(infoProducto);
         return RedirectToAction ("Index");
     }
     
@@ -110,7 +111,10 @@ public class PresupuestosController : Controller
             Text = c.Nombre
         }).ToList();
         var presupuesto  = repoPresupuestos.ObtenerPresupuestoPorId(id);
-        return View(presupuesto);
+        var presupuestoVM = new ModificarPresupuestoViewModel();
+        presupuestoVM.IdPresupuesto = id;
+        presupuestoVM.FechaCreacion = presupuesto.FechaCreacion;
+        return View(presupuestoVM);
     }
 
     [HttpPost]

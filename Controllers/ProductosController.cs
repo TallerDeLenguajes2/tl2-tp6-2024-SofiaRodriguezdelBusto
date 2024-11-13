@@ -40,7 +40,8 @@ public class ProductosController : Controller
     public IActionResult ModificarProducto(int id)
     {
         var producto  = repoProductos.ObtenerProductoPorId(id);
-        return View(producto);
+        ModificarProductoViewModel prod = new ModificarProductoViewModel(producto);
+        return View(prod);
     }
 
     [HttpPost]

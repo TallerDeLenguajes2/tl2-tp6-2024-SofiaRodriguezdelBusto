@@ -5,7 +5,7 @@ public class AltaProductoViewModel
     string descripcion;
     double precio;
 
-    public ProductoViewModel()
+    public AltaProductoViewModel()
     {
     }
 
