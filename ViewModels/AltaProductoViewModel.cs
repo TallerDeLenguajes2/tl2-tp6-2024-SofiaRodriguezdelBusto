@@ -1,6 +1,6 @@
 
 using System.ComponentModel.DataAnnotations; 
-public class ProductoViewModel
+public class AltaProductoViewModel
 {
     string descripcion;
     double precio;

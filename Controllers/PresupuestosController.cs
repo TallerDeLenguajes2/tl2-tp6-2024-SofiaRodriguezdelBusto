@@ -114,7 +114,7 @@ public class PresupuestosController : Controller
     }
 
     [HttpPost]
-    public IActionResult ModificarPresupuesto(Presupuesto presupuesto)
+    public IActionResult ModificarPresupuesto(ModificarPresupuestoViewModel presupuesto)
     {
         repoPresupuestos.ModificarPresupuesto(presupuesto);
         return RedirectToAction ("Index"); 

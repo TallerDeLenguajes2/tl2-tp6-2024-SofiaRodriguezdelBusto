@@ -164,7 +164,7 @@ class PresupuestosRepository
             connection.Close();
         }
     }
-    public void ModificarPresupuesto(Presupuesto presupuesto)
+    public void ModificarPresupuesto(ModificarPresupuestoViewModel presupuesto)
     {
         string connectionString = @"Data Source = db/Tienda.db;Cache=Shared";
 
@@ -174,7 +174,7 @@ class PresupuestosRepository
         {
             connection.Open();
             SqliteCommand command = new SqliteCommand(query,connection);
-            command.Parameters.AddWithValue("@idC", presupuesto.Cliente.ClienteId);
+            command.Parameters.AddWithValue("@idC", presupuesto.IdCliente);
             command.Parameters.AddWithValue("@fecha", presupuesto.FechaCreacion);
             command.Parameters.AddWithValue("@Id", presupuesto.IdPresupuesto);
             command.ExecuteNonQuery();

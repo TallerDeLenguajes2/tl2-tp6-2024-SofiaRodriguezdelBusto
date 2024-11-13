@@ -28,7 +28,7 @@ public class ProductosController : Controller
     }
 
     [HttpPost]
-    public IActionResult CrearProducto(ProductoViewModel producto)
+    public IActionResult CrearProducto(AltaProductoViewModel producto)
     {
         if(!ModelState.IsValid) return RedirectToAction ("Index");
         repoProductos.CrearProducto(producto);
@@ -44,7 +44,7 @@ public class ProductosController : Controller
     }
 
     [HttpPost]
-    public IActionResult ModificarProducto(Producto producto)
+    public IActionResult ModificarProducto(ModificarProductoViewModel producto)
     {
         repoProductos.ModificarProducto(producto);
         return RedirectToAction ("Index"); 

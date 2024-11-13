@@ -1,7 +1,7 @@
 
 
 using System.ComponentModel.DataAnnotations; 
-public class ClienteViewModel
+public class AltaClienteViewModel
 {
     string nombre;
     string email;

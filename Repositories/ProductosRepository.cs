@@ -3,7 +3,7 @@ using Microsoft.Data.Sqlite;
 
 class ProductosRepository
 {
-    public void CrearProducto(ProductoViewModel producto)
+    public void CrearProducto(AltaProductoViewModel producto)
     {
         string connectionString = @"Data Source = db/Tienda.db;Cache=Shared";
 
@@ -55,7 +55,7 @@ class ProductosRepository
     }
 
 
-    public void ModificarProducto(Producto producto)
+    public void ModificarProducto(ModificarProductoViewModel producto)
     {
         string connectionString = @"Data Source = db/Tienda.db;Cache=Shared";
 

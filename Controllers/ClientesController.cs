@@ -29,7 +29,7 @@ public class ClientesController : Controller
     }
 
     [HttpPost]
-    public IActionResult CrearCliente(ClienteViewModel cliente)
+    public IActionResult CrearCliente(AltaClienteViewModel cliente)
     {
         if(!ModelState.IsValid) return RedirectToAction ("Index");
         repoClientes.CrearCliente(cliente);
@@ -45,7 +45,7 @@ public class ClientesController : Controller
     }
 
     [HttpPost]
-    public IActionResult ModificarCliente(Cliente cliente)
+    public IActionResult ModificarCliente(ModificarClienteViewModel cliente)
     {
         repoClientes.ModificarCliente(cliente);
         return RedirectToAction ("Index"); 
