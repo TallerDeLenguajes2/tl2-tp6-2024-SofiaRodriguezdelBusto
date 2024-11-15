@@ -2,7 +2,7 @@
 using System.Threading.Channels;
 using Microsoft.Data.Sqlite;
 
-public class ClientesRepository
+public class ClientesRepository : IClientesRepository
 {
     string connectionString;
 
@@ -10,7 +10,6 @@ public class ClientesRepository
     {
         connectionString = @"Data Source = db/Tienda.db;Cache=Shared";
     }
-
 
     public void CrearCliente(Cliente cliente)
     {
@@ -104,7 +103,6 @@ public class ClientesRepository
         }
         return cliente;
     }
-
     public void EliminarCliente(int id)
     {
         string query = @"DELETE FROM Cliente WHERE ClienteId = @Id;";

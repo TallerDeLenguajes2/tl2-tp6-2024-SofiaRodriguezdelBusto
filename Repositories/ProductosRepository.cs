@@ -1,12 +1,17 @@
 
 using Microsoft.Data.Sqlite;
 
-class ProductosRepository
+class ProductosRepository : IProductosRepository
 {
+    string connectionString;
+
+    public ProductosRepository()
+    {
+        connectionString = @"Data Source = db/Tienda.db;Cache=Shared";
+    }
+
     public void CrearProducto(Producto producto)
     {
-        string connectionString = @"Data Source = db/Tienda.db;Cache=Shared";
-
         string query = @"INSERT INTO Productos (Descripcion, Precio) 
         VALUES (@Descripcion, @Precio)";
 
@@ -25,7 +30,6 @@ class ProductosRepository
     public List<Producto>  ObtenerProductos()
     {
         List<Producto> productos = new List<Producto>();
-        string connectionString = @"Data Source = db/Tienda.db;Cache=Shared";
 
         string query = @"SELECT * FROM Productos";
 
@@ -57,8 +61,7 @@ class ProductosRepository
 
     public void ModificarProducto(Producto producto)
     {
-        string connectionString = @"Data Source = db/Tienda.db;Cache=Shared";
-
+    
         string query = @"UPDATE Productos SET Descripcion = @Descripcion, Precio = @Precio WHERE idProducto = @Id";
 
         using (SqliteConnection connection = new SqliteConnection(connectionString))
@@ -77,7 +80,6 @@ class ProductosRepository
     public Producto  ObtenerProductoPorId(int id)
     {
         Producto producto = null;
-        string connectionString = @"Data Source = db/Tienda.db;Cache=Shared";
 
         string query = @"SELECT * FROM Productos WHERE idProducto = @id ";
 
@@ -104,7 +106,6 @@ class ProductosRepository
 
     public void EliminarProductoPorId(int id)
     {
-        string connectionString = @"Data Source = db/Tienda.db;Cache=Shared";
 
         string query = @"DELETE FROM Productos WHERE idProducto = @Id;";
         string query2 = @"DELETE FROM PresupuestosDetalle WHERE idProducto = @id;";
@@ -121,7 +122,5 @@ class ProductosRepository
             connection.Close();            
         }
     }
-
-    
 
 }

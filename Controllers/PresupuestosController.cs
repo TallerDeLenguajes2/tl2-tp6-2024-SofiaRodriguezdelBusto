@@ -9,12 +9,17 @@ public class PresupuestosController : Controller
 
     private readonly ILogger<PresupuestosController> _logger;
 
-    private PresupuestosRepository repoPresupuestos;
+    private IPresupuestoRepository repoPresupuestos;
 
-    public PresupuestosController(ILogger<PresupuestosController> logger)
+    private IProductosRepository repoProductos;
+
+    private IClientesRepository repoClientes;
+    public PresupuestosController(ILogger<PresupuestosController> logger, IPresupuestoRepository repoPresupuestos, IProductosRepository repoProductos, IClientesRepository repoClientes)
     {
         _logger = logger;
-        repoPresupuestos = new PresupuestosRepository();
+        this.repoPresupuestos = repoPresupuestos;
+        this.repoProductos = repoProductos;
+        this.repoClientes = repoClientes;
     }
 
     public IActionResult Index()
@@ -32,7 +37,6 @@ public class PresupuestosController : Controller
     [HttpGet]
     public IActionResult AltaPresupuesto()
     {
-        ClientesRepository repoClientes = new ClientesRepository();
         List<Cliente> Clientes = repoClientes.ObtenerClientes();
         ViewData["Clientes"] =  Clientes.Select(c=> new SelectListItem
         {
@@ -49,7 +53,7 @@ public class PresupuestosController : Controller
     {
         //chequear so tiene permiso
        if(!ModelState.IsValid) return RedirectToAction ("Index");
-       var presupuesto = new Presupuesto(presupuestoVM)
+       var presupuesto = new Presupuesto(presupuestoVM);
        repoPresupuestos.CrearPresupuesto(presupuesto);
        return RedirectToAction ("Index");
 
@@ -59,7 +63,6 @@ public class PresupuestosController : Controller
 
     public IActionResult AgregarProductoAPresupuesto(int id)
     {
-        ProductosRepository repoProductos = new ProductosRepository();
         List<Producto> productos = repoProductos.ObtenerProductos();
         ViewData["Productos"] = productos.Select(p => new SelectListItem
         {
@@ -105,7 +108,6 @@ public class PresupuestosController : Controller
     [HttpGet]
     public IActionResult ModificarPresupuesto(int id)
     {
-        ClientesRepository repoClientes = new ClientesRepository();
         List<Cliente> Clientes = repoClientes.ObtenerClientes();
         ViewData["Clientes"] =  Clientes.Select(c=> new SelectListItem
         {
