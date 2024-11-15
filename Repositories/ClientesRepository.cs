@@ -12,7 +12,7 @@ public class ClientesRepository
     }
 
 
-    public void CrearCliente(AltaClienteViewModel cliente)
+    public void CrearCliente(Cliente cliente)
     {
         string query = @"INSERT INTO Cliente (Nombre, Email, Telefono) VALUES (@nombre, @email, @telefono);";
 
@@ -60,7 +60,7 @@ public class ClientesRepository
         return clientes;
     }
 
-    public void ModificarCliente(ModificarClienteViewModel cliente)
+    public void ModificarCliente(Cliente cliente)
     {
         string query = @"UPDATE Cliente SET Nombre = @nombre, Email = @email, Telefono = @telefono WHERE ClienteId = @Id;";
 

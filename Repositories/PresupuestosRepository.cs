@@ -3,7 +3,7 @@ using Microsoft.Data.Sqlite;
 
 class PresupuestosRepository
 {
-    public void CrearPresupuesto(AltaPresupuestoViewModel presupuesto)
+    public void CrearPresupuesto(Presupuesto presupuesto)
     {
 
         string connectionString = @"Data Source = db/Tienda.db;Cache=Shared";
@@ -15,7 +15,7 @@ class PresupuestosRepository
         {
             connection.Open();
             SqliteCommand command = new SqliteCommand(query,connection);
-            command.Parameters.AddWithValue("@idC", presupuesto.IdCliente);
+            command.Parameters.AddWithValue("@idC", presupuesto.Cliente.ClienteId);
             command.Parameters.AddWithValue("@fecha", presupuesto.FechaCreacion);
             command.ExecuteNonQuery();
             connection.Close();            
@@ -130,7 +130,7 @@ class PresupuestosRepository
         return presupuesto;
     }
 
-    public void AgregarProducto(AgregarProductoAPresuViewModel info)
+    public void AgregarProducto(int idPresupuesto, int idProducto, int cantidad)
     {
     
         string connectionString = @"Data Source = db/Tienda.db;Cache=Shared";
@@ -141,9 +141,9 @@ class PresupuestosRepository
         {
             connection.Open();
             SqliteCommand command = new SqliteCommand(query, connection);
-            command.Parameters.AddWithValue("@idPresu", info.IdPresupuesto);
-            command.Parameters.AddWithValue("@idProd", info.IdProducto);
-            command.Parameters.AddWithValue("@cant", info.Cantidad);
+            command.Parameters.AddWithValue("@idPresu", idPresupuesto);
+            command.Parameters.AddWithValue("@idProd", idProducto);
+            command.Parameters.AddWithValue("@cant", cantidad);
             command.ExecuteNonQuery();
             connection.Close();
         }
@@ -164,17 +164,16 @@ class PresupuestosRepository
             connection.Close();
         }
     }
-    public void ModificarPresupuesto(ModificarPresupuestoViewModel presupuesto)
+    public void ModificarPresupuesto(Presupuesto presupuesto)
     {
         string connectionString = @"Data Source = db/Tienda.db;Cache=Shared";
-
         string query = @"UPDATE Presupuestos SET IdCliente = @idC, FechaCreacion = @fecha WHERE idPresupuesto = @Id";
 
         using (SqliteConnection connection = new SqliteConnection(connectionString))
         {
             connection.Open();
             SqliteCommand command = new SqliteCommand(query,connection);
-            command.Parameters.AddWithValue("@idC", presupuesto.IdCliente);
+            command.Parameters.AddWithValue("@idC", presupuesto.Cliente.ClienteId);
             command.Parameters.AddWithValue("@fecha", presupuesto.FechaCreacion);
             command.Parameters.AddWithValue("@Id", presupuesto.IdPresupuesto);
             command.ExecuteNonQuery();

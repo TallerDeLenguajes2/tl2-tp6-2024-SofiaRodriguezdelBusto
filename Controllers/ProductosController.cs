@@ -28,9 +28,10 @@ public class ProductosController : Controller
     }
 
     [HttpPost]
-    public IActionResult CrearProducto(AltaProductoViewModel producto)
+    public IActionResult CrearProducto(AltaProductoViewModel productoVM)
     {
         if(!ModelState.IsValid) return RedirectToAction ("Index");
+        var producto = new Producto(productoVM);
         repoProductos.CrearProducto(producto);
         return RedirectToAction ("Index");
 
@@ -45,8 +46,10 @@ public class ProductosController : Controller
     }
 
     [HttpPost]
-    public IActionResult ModificarProducto(ModificarProductoViewModel producto)
+    public IActionResult ModificarProducto(ModificarProductoViewModel productoVM)
     {
+        if(!ModelState.IsValid) return RedirectToAction ("Index");
+        var producto = new Producto(productoVM);
         repoProductos.ModificarProducto(producto);
         return RedirectToAction ("Index"); 
 

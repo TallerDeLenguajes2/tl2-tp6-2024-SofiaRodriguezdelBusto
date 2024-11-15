@@ -14,7 +14,20 @@ public class Producto
         this.descripcion = descripcion;
         this.precio = precio;
     }
+    public Producto(AltaProductoViewModel produVM)
+    {
+        Descripcion = produVM.Descripcion;
+        Precio = produVM.Precio;
 
+    }
+
+    public Producto(ModificarProductoViewModel produVM)
+    {
+        IdProducto = produVM.IdProducto;
+        Descripcion = produVM.Descripcion;
+        Precio = produVM.Precio;
+
+    }
     public int IdProducto { get => idProducto; set => idProducto = value; }
     public string Descripcion { get => descripcion; set => descripcion = value; }
     public int Precio { get => precio; set => precio = value; }

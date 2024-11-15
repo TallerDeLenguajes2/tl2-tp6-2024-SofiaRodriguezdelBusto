@@ -29,6 +29,23 @@ public class Presupuesto
 
     }
 
+    public Presupuesto(AltaPresupuestoViewModel presuVM)
+    {
+        cliente = new Cliente();
+        cliente.ClienteId = presuVM.IdCliente;
+        FechaCreacion = presuVM.FechaCreacion;
+    }
+
+    public Presupuesto(ModificarPresupuestoViewModel presuVM)
+    {
+        idPresupuesto = presuVM.IdPresupuesto;
+        cliente = new Cliente();
+        cliente.ClienteId = presuVM.IdCliente;
+        fechaCreacion = presuVM.FechaCreacion;
+    }
+
+
+
     public double MontoPresupuesto()
     {
         int monto = detalle.Sum(d => d.Cantidad*d.Producto.Precio);

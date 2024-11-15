@@ -45,12 +45,13 @@ public class PresupuestosController : Controller
 
     
     [HttpPost]
-    public IActionResult CrearPresupuesto(AltaPresupuestoViewModel presupuesto)
+    public IActionResult CrearPresupuesto(AltaPresupuestoViewModel presupuestoVM)
     {
-
+        //chequear so tiene permiso
        if(!ModelState.IsValid) return RedirectToAction ("Index");
+       var presupuesto = new Presupuesto(presupuestoVM)
        repoPresupuestos.CrearPresupuesto(presupuesto);
-        return RedirectToAction ("Index");
+       return RedirectToAction ("Index");
 
     }
 
@@ -74,7 +75,8 @@ public class PresupuestosController : Controller
 
     public IActionResult AgregarProductoEnPresupuesto(AgregarProductoAPresuViewModel infoProducto)
     {
-        repoPresupuestos.AgregarProducto(infoProducto);
+        if(!ModelState.IsValid) return RedirectToAction ("Index");
+        repoPresupuestos.AgregarProducto(infoProducto.IdPresupuesto, infoProducto.IdProducto, infoProducto.Cantidad);
         return RedirectToAction ("Index");
     }
     
@@ -118,8 +120,10 @@ public class PresupuestosController : Controller
     }
 
     [HttpPost]
-    public IActionResult ModificarPresupuesto(ModificarPresupuestoViewModel presupuesto)
+    public IActionResult ModificarPresupuesto(ModificarPresupuestoViewModel presupuestoVM)
     {
+        if(!ModelState.IsValid) return RedirectToAction ("Index");
+        var presupuesto = new Presupuesto(presupuestoVM);
         repoPresupuestos.ModificarPresupuesto(presupuesto);
         return RedirectToAction ("Index"); 
 
