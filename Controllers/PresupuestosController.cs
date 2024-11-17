@@ -26,6 +26,7 @@ public class PresupuestosController : Controller
     public IActionResult Index()
     {
         if (string.IsNullOrEmpty(HttpContext.Session.GetString("User"))) return RedirectToAction ("Index", "Login");
+        ViewData["EsAdmin"] = HttpContext.Session.GetString("AccessLevel") == "Admin";
         return View(repoPresupuestos.ObtenerPresupuestos());
     }
 

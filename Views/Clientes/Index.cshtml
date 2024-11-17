@@ -14,8 +14,11 @@
         <tr>
             <th>Nombre</th>
             <th>Email</th>
-            <th>Telefono</th>
-            <th>Acciones</th>
+            <th>Teléfono</th>
+            @if ((bool)ViewData["EsAdmin"])
+            {
+                <th>Acciones</th>
+            }
         </tr>
     </thead>
     <tbody>
@@ -25,17 +28,23 @@
                 <td>@cliente.Nombre</td>
                 <td>@cliente.Email</td>
                 <td>@cliente.Telefono</td>
-                <td>
-                    <a asp-controller="Clientes" asp-action="ModificarCliente" asp-route-id="@cliente.ClienteId" class="btn btn-warning">Editar</a>
-                    <a asp-controller="Clientes" asp-action="EliminarCliente" asp-route-id="@cliente.ClienteId" class="btn btn-danger">Eliminar</a>
-                </td>
+                @if ((bool)ViewData["EsAdmin"])
+                {
+                    <td>
+                        <a asp-controller="Clientes" asp-action="ModificarCliente" asp-route-id="@cliente.ClienteId" class="btn btn-warning">Editar</a>
+                        <a asp-controller="Clientes" asp-action="EliminarCliente" asp-route-id="@cliente.ClienteId" class="btn btn-danger">Eliminar</a>
+                    </td>
+                }
             </tr>
         }
     </tbody>
 </table>
 
 <div class="text-center">
-    <a asp-controller="Clientes" asp-action="AltaCliente" class="btn btn-success">Alta Cliente</a>
+    @if ((bool)ViewData["EsAdmin"])
+    {
+        <a asp-controller="Clientes" asp-action="AltaCliente" class="btn btn-success">Alta Cliente</a>
+    }
 </div>
 
 
