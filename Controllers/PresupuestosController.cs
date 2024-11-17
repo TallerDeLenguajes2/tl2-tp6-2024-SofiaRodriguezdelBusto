@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -24,19 +25,28 @@ public class PresupuestosController : Controller
 
     public IActionResult Index()
     {
+        if (string.IsNullOrEmpty(HttpContext.Session.GetString("User"))) return RedirectToAction ("Index", "Login");
         return View(repoPresupuestos.ObtenerPresupuestos());
     }
 
     [HttpGet]
 
+
     public IActionResult DetallesDelPresupuesto(int id)
     {
+        if (string.IsNullOrEmpty(HttpContext.Session.GetString("User"))) return RedirectToAction ("Index", "Login");
         return View(repoPresupuestos.ObtenerPresupuestoPorId(id));
     }
 
     [HttpGet]
     public IActionResult AltaPresupuesto()
     {
+        if (string.IsNullOrEmpty(HttpContext.Session.GetString("User"))) return RedirectToAction ("Index", "Login");
+        if (HttpContext.Session.GetString("AccessLevel") != "Admin")
+        {
+            TempData["ErrorMessage"] = "No tienes permisos para realizar esta acción.";
+            return RedirectToAction("Index");
+        }
         List<Cliente> Clientes = repoClientes.ObtenerClientes();
         ViewData["Clientes"] =  Clientes.Select(c=> new SelectListItem
         {
@@ -51,7 +61,12 @@ public class PresupuestosController : Controller
     [HttpPost]
     public IActionResult CrearPresupuesto(AltaPresupuestoViewModel presupuestoVM)
     {
-        //chequear so tiene permiso
+       if (string.IsNullOrEmpty(HttpContext.Session.GetString("User"))) return RedirectToAction ("Index", "Login");
+       if (HttpContext.Session.GetString("AccessLevel") != "Admin")
+       {
+            TempData["ErrorMessage"] = "No tienes permisos para realizar esta acción.";
+            return RedirectToAction("Index");
+       }
        if(!ModelState.IsValid) return RedirectToAction ("Index");
        var presupuesto = new Presupuesto(presupuestoVM);
        repoPresupuestos.CrearPresupuesto(presupuesto);
@@ -63,6 +78,12 @@ public class PresupuestosController : Controller
 
     public IActionResult AgregarProductoAPresupuesto(int id)
     {
+        if (string.IsNullOrEmpty(HttpContext.Session.GetString("User"))) return RedirectToAction ("Index", "Login");
+        if (HttpContext.Session.GetString("AccessLevel") != "Admin")
+        {
+            TempData["ErrorMessage"] = "No tienes permisos para realizar esta acción.";
+            return RedirectToAction("Index");
+        }
         List<Producto> productos = repoProductos.ObtenerProductos();
         ViewData["Productos"] = productos.Select(p => new SelectListItem
         {
@@ -78,6 +99,12 @@ public class PresupuestosController : Controller
 
     public IActionResult AgregarProductoEnPresupuesto(AgregarProductoAPresuViewModel infoProducto)
     {
+        if (string.IsNullOrEmpty(HttpContext.Session.GetString("User"))) return RedirectToAction ("Index", "Login");
+        if (HttpContext.Session.GetString("AccessLevel") != "Admin")
+        {
+            TempData["ErrorMessage"] = "No tienes permisos para realizar esta acción.";
+            return RedirectToAction("Index");
+        }
         if(!ModelState.IsValid) return RedirectToAction ("Index");
         repoPresupuestos.AgregarProducto(infoProducto.IdPresupuesto, infoProducto.IdProducto, infoProducto.Cantidad);
         return RedirectToAction ("Index");
@@ -87,6 +114,12 @@ public class PresupuestosController : Controller
 
     public IActionResult EliminarProductoAPresupuesto(int id)
     {
+        if (string.IsNullOrEmpty(HttpContext.Session.GetString("User"))) return RedirectToAction ("Index", "Login");
+        if (HttpContext.Session.GetString("AccessLevel") != "Admin")
+        {
+            TempData["ErrorMessage"] = "No tienes permisos para realizar esta acción.";
+            return RedirectToAction("Index");
+        }
         Presupuesto presupuesto = repoPresupuestos.ObtenerPresupuestoPorId(id);
         ViewData["Productos"] = presupuesto.Detalle.Select(p => new SelectListItem
         {
@@ -101,6 +134,12 @@ public class PresupuestosController : Controller
 
     public IActionResult EliminarProductoEnPresupuesto(int idPresupuesto, int idProducto)
     {
+        if (string.IsNullOrEmpty(HttpContext.Session.GetString("User"))) return RedirectToAction ("Index", "Login");
+        if (HttpContext.Session.GetString("AccessLevel") != "Admin")
+        {
+            TempData["ErrorMessage"] = "No tienes permisos para realizar esta acción.";
+            return RedirectToAction("Index");
+        }
         repoPresupuestos.EliminarProducto(idPresupuesto, idProducto);
         return RedirectToAction ("Index");
     }
@@ -108,6 +147,12 @@ public class PresupuestosController : Controller
     [HttpGet]
     public IActionResult ModificarPresupuesto(int id)
     {
+        if (string.IsNullOrEmpty(HttpContext.Session.GetString("User"))) return RedirectToAction ("Index", "Login");
+        if (HttpContext.Session.GetString("AccessLevel") != "Admin")
+        {
+            TempData["ErrorMessage"] = "No tienes permisos para realizar esta acción.";
+            return RedirectToAction("Index");
+        }
         List<Cliente> Clientes = repoClientes.ObtenerClientes();
         ViewData["Clientes"] =  Clientes.Select(c=> new SelectListItem
         {
@@ -124,6 +169,12 @@ public class PresupuestosController : Controller
     [HttpPost]
     public IActionResult ModificarPresupuesto(ModificarPresupuestoViewModel presupuestoVM)
     {
+        if (string.IsNullOrEmpty(HttpContext.Session.GetString("User"))) return RedirectToAction ("Index", "Login");
+        if (HttpContext.Session.GetString("AccessLevel") != "Admin")
+        {
+            TempData["ErrorMessage"] = "No tienes permisos para realizar esta acción.";
+            return RedirectToAction("Index");
+        }
         if(!ModelState.IsValid) return RedirectToAction ("Index");
         var presupuesto = new Presupuesto(presupuestoVM);
         repoPresupuestos.ModificarPresupuesto(presupuesto);
@@ -136,12 +187,24 @@ public class PresupuestosController : Controller
 
     public IActionResult EliminarPresupuesto(int id)
     {
+        if (string.IsNullOrEmpty(HttpContext.Session.GetString("User"))) return RedirectToAction ("Index", "Login");
+        if (HttpContext.Session.GetString("AccessLevel") != "Admin")
+        {
+            TempData["ErrorMessage"] = "No tienes permisos para realizar esta acción.";
+            return RedirectToAction("Index");
+        }
         return View(repoPresupuestos.ObtenerPresupuestoPorId(id));
     }
 
     [HttpGet]
     public IActionResult EliminarPresupuestoPorId(int id)
     {
+        if (string.IsNullOrEmpty(HttpContext.Session.GetString("User"))) return RedirectToAction ("Index", "Login");
+        if (HttpContext.Session.GetString("AccessLevel") != "Admin")
+        {
+            TempData["ErrorMessage"] = "No tienes permisos para realizar esta acción.";
+            return RedirectToAction("Index");
+        }
         repoPresupuestos.EliminarPresupuestoPorId(id);
         return RedirectToAction ("Index"); 
     }

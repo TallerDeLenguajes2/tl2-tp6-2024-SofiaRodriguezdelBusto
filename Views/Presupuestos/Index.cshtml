@@ -1,4 +1,12 @@
+
 @model List<Presupuesto>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["ErrorMessage"]
+    </div>
+}
 
 <h2>Presupuestos</h2>
 

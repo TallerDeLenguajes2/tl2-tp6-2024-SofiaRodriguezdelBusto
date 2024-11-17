@@ -1,5 +1,10 @@
 @model List<Producto>
-
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["ErrorMessage"]
+    </div>
+}
 <h2>Lista de Productos</h2>
 
 <table class="table table-bordered">

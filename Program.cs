@@ -2,7 +2,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton<IClientesRepository,ClientesRepository>();
 builder.Services.AddSingleton<IPresupuestoRepository, PresupuestosRepository>();
 builder.Services.AddSingleton<IProductosRepository, ProductosRepository>();
-builder.Services.AddScoped<IUserRepository, InMemoryUserRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 // Add services to the container.
 builder.Services.AddSession(options =>
 {

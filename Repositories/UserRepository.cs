@@ -41,4 +41,22 @@ public class UserRepository : IUserRepository
         return user;
     }
 
+    public void AltaUsuario(User usuario)
+    {
+        string query = @"INSERT INTO Usuario (nombre, usuario, password, id_rol) VALUES (@nombre, @usu, @contra, @rol)";
+
+        using (SqliteConnection connection = new SqliteConnection(connectionString))
+        {
+            connection.Open();
+            SqliteCommand command = new SqliteCommand(query,connection);
+            command.Parameters.AddWithValue("@nombre", usuario.Nombre);
+            command.Parameters.AddWithValue("@usu", usuario.Username);
+            command.Parameters.AddWithValue("@contra", usuario.Password);
+            command.Parameters.AddWithValue("@rol", (int)usuario.AccessLevel);
+            command.ExecuteNonQuery();
+            connection.Close();            
+        }
+
+    }
+
 }

@@ -1,10 +1,5 @@
 @model LoginViewModel  
 
-@{
-    ViewData["Title"] = "Login";
-}
-
-<h2 class="text-center">@ViewData["Title"]</h2>
 
 <!-- Mostrar mensaje de error si existe -->
 @if (!string.IsNullOrEmpty(Model.ErrorMessage))
@@ -38,6 +33,10 @@
                     <button type="submit" class="btn btn-primary">Iniciar sesión</button>
                 </div>
             </form>
+        <div class="d-grid gap-2 mt-2">
+            <a asp-controller="Login" asp-action="CrearUsuario" class="btn btn-success">Crear Usuario</a>
         </div>
+        </div>
+        
     </div>
 }

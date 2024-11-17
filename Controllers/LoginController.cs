@@ -6,14 +6,14 @@ namespace MiWebApi.Controllers;
 
 public class LoginController : Controller
 {
-    private readonly IUserRepository _inMemoryUserRepository;
+    private readonly IUserRepository _userRepository;
 
     private readonly ILogger<LoginController> _logger;
 
 
-    public LoginController(IUserRepository inMemoryUserRepository)
+    public LoginController(IUserRepository userRepository)
     {
-        _inMemoryUserRepository = inMemoryUserRepository;
+        _userRepository = userRepository;
     }
 
     public IActionResult Index()
@@ -32,7 +32,7 @@ public class LoginController : Controller
             model.ErrorMessage = "Por favor ingrese su nombre de usuario y contraseña.";
             return View("Index", model);
         }
-        User usuario = _inMemoryUserRepository.GetUser(model.Username, model.Password);
+        User usuario = _userRepository.GetUser(model.Username, model.Password);
         if(usuario != null)
         {
             HttpContext.Session.SetString("IsAuthenticated", "true");
@@ -52,6 +52,23 @@ public class LoginController : Controller
         HttpContext.Session.Clear();
 
         // Redirigir a la vista de login
+        return RedirectToAction("Index");
+    }
+    [HttpGet]
+
+    public IActionResult CrearUsuario()
+    {
+        return View();
+    }
+
+    [HttpPost]
+
+    public IActionResult AltaUsuario(CrearUsuarioViewModel usuarioVM)
+    {
+
+        if(!ModelState.IsValid) return RedirectToAction ("CrearUsuario");
+        User usuario = new User(usuarioVM);
+        _userRepository.AltaUsuario(usuario);
         return RedirectToAction("Index");
     }
 }

@@ -1,5 +1,12 @@
 @model List<Cliente>
 
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
 <h2>Lista de Clientes</h2>
 
 <table class="table table-bordered">
@@ -8,6 +15,7 @@
             <th>Nombre</th>
             <th>Email</th>
             <th>Telefono</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
