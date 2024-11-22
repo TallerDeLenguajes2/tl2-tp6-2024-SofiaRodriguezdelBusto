@@ -1,5 +1,12 @@
 @model ModificarPresupuestoViewModel
 
+@if (ViewBag.ErrorMessage != null)
+{
+        <div class="error-message">
+            <p>@ViewBag.ErrorMessage</p>
+        </div>
+}
+
 
 <h2>Editar Presupuesto</h2>
 

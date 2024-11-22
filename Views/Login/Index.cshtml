@@ -1,5 +1,12 @@
 @model LoginViewModel  
 
+@if (ViewBag.ErrorMessage != null)
+{
+        <div class="error-message">
+            <p>@ViewBag.ErrorMessage</p>
+        </div>
+}
+
 
 <!-- Mostrar mensaje de error si existe -->
 @if (!string.IsNullOrEmpty(Model.ErrorMessage))

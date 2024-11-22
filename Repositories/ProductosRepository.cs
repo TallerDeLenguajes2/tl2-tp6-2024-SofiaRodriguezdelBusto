@@ -3,11 +3,11 @@ using Microsoft.Data.Sqlite;
 
 class ProductosRepository : IProductosRepository
 {
-    string connectionString;
+    private readonly string connectionString;
 
-    public ProductosRepository()
+    public ProductosRepository(string CadenaDeConexion)
     {
-        connectionString = @"Data Source = db/Tienda.db;Cache=Shared";
+       connectionString = CadenaDeConexion;
     }
 
     public void CrearProducto(Producto producto)
@@ -100,6 +100,10 @@ class ProductosRepository : IProductosRepository
 
             }
             connection.Close();            
+        }
+        if (producto == null)
+        {
+            throw new Exception("Producto inexistente");
         }
         return producto;
     }

@@ -4,11 +4,11 @@ using Microsoft.Data.Sqlite;
 
 public class UserRepository : IUserRepository
 {
-    string connectionString;
+    private readonly string connectionString;
 
-    public UserRepository()
+    public UserRepository(string CadenaDeConexion)
     {
-        connectionString = @"Data Source = db/Tienda.db;Cache=Shared";
+        connectionString = CadenaDeConexion;
     }
 
     public User GetUser(string username, string password)

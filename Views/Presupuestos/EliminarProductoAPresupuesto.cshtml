@@ -1,5 +1,12 @@
 @model int
 
+@if (ViewBag.ErrorMessage != null)
+{
+        <div class="error-message">
+            <p>@ViewBag.ErrorMessage</p>
+        </div>
+}
+
 <form asp-controller="Presupuestos" asp-action="EliminarProductoEnPresupuesto" method="post" class="container mt-4">
 
     <input type="hidden" name="idPresupuesto" value="@Model" />

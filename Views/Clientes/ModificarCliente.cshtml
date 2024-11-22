@@ -1,6 +1,13 @@
 @model ModificarClienteViewModel
 
 
+@if (ViewBag.ErrorMessage != null)
+{
+        <div class="error-message">
+            <p>@ViewBag.ErrorMessage</p>
+        </div>
+}
+
 <h2>Editar Cliente</h2>
 
 <form asp-controller="Clientes" asp-action="ModificarCliente" method="post">

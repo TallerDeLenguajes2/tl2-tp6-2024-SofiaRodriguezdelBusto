@@ -4,26 +4,35 @@ using Microsoft.Data.Sqlite;
 
 public class ClientesRepository : IClientesRepository
 {
-    string connectionString;
+    private readonly ILogger<ClientesRepository> _logger;
+    private readonly string connectionString;
 
-    public ClientesRepository()
+    public ClientesRepository(string CadenaDeConexion)
     {
-        connectionString = @"Data Source = db/Tienda.db;Cache=Shared";
+        connectionString = CadenaDeConexion;
     }
 
     public void CrearCliente(Cliente cliente)
     {
-        string query = @"INSERT INTO Cliente (Nombre, Email, Telefono) VALUES (@nombre, @email, @telefono);";
-
-        using (SqliteConnection connection = new SqliteConnection(connectionString))
+        try
         {
-            connection.Open();
-            SqliteCommand command = new SqliteCommand(query, connection);
-            command.Parameters.AddWithValue("@nombre", cliente.Nombre);
-            command.Parameters.AddWithValue("@email", cliente.Email);
-            command.Parameters.AddWithValue("@telefono", cliente.Telefono);
-            command.ExecuteNonQuery();
-            connection.Close();
+            string query = @"INSERT INTO Cliente (Nombre, Email, Telefono) VALUES (@nombre, @email, @telefono);";
+
+            using (SqliteConnection connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+                SqliteCommand command = new SqliteCommand(query, connection);
+                command.Parameters.AddWithValue("@nombre", cliente.Nombre);
+                command.Parameters.AddWithValue("@email", cliente.Email);
+                command.Parameters.AddWithValue("@telefono", cliente.Telefono);
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.ToString());
+            throw new Exception();
         }
     }
 
@@ -100,6 +109,10 @@ public class ClientesRepository : IClientesRepository
                 }
             }
             connection.Close();
+        }
+        if (cliente == null)
+        {
+            throw new Exception("Cliente inexistente");
         }
         return cliente;
     }

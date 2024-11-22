@@ -3,6 +3,10 @@ builder.Services.AddSingleton<IClientesRepository,ClientesRepository>();
 builder.Services.AddSingleton<IPresupuestoRepository, PresupuestosRepository>();
 builder.Services.AddSingleton<IProductosRepository, ProductosRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+var CadenaDeConexion = builder.Configuration.GetConnectionString("SqliteConexion")!.ToString();
+builder.Services.AddSingleton(CadenaDeConexion);
+
 // Add services to the container.
 builder.Services.AddSession(options =>
 {
@@ -11,6 +15,7 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true; // Necesario incluso si el usuario no acepta cookies
 });
 builder.Services.AddControllersWithViews();
+
 
 var app = builder.Build();
 

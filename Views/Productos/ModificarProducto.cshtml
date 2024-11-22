@@ -1,5 +1,11 @@
 @model ModificarProductoViewModel
 
+@if (ViewBag.ErrorMessage != null)
+{
+        <div class="error-message">
+            <p>@ViewBag.ErrorMessage</p>
+        </div>
+}
 
 <h2>Editar Producto</h2>
 

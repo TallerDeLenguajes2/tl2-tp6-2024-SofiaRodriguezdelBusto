@@ -1,5 +1,11 @@
 @model AltaClienteViewModel
 
+@if (ViewBag.ErrorMessage != null)
+{
+        <div class="error-message">
+            <p>@ViewBag.ErrorMessage</p>
+        </div>
+}
 
 <h2>Crear Nuevo Cliente</h2>
 

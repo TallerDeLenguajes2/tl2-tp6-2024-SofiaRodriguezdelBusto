@@ -3,10 +3,10 @@ using Microsoft.Data.Sqlite;
 
 class PresupuestosRepository : IPresupuestoRepository
 {
-    string connectionString;
-    public PresupuestosRepository()
+    private readonly string connectionString;
+    public PresupuestosRepository(string CadenaDeConexion)
     {
-        connectionString = @"Data Source = db/Tienda.db;Cache=Shared";
+        connectionString = CadenaDeConexion;
     }
 
     public void CrearPresupuesto(Presupuesto presupuesto)
@@ -128,6 +128,10 @@ class PresupuestosRepository : IPresupuestoRepository
                 }
             }
             connection.Close();
+        }
+        if (presupuesto == null)
+        {
+            throw new Exception("Presupuesto inexistente");
         }
         return presupuesto;
     }
